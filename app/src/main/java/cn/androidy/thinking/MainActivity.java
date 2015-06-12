@@ -1,7 +1,11 @@
 package cn.androidy.thinking;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -9,19 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TabLayout.OnTabSelectedListener {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBar mActionBar;
     private FloatingActionButton mFloatingActionButton;
-
     private ArrayList<Integer> mFloatingActionButtonImageResIdList;
     private int mCurrentColorIndex = 0;
-
+    private TabLayout mTabLayout;
+    private Tab tab1;
+    private Tab tab2;
+    private Tab tab3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +40,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         mFloatingActionButton.setOnClickListener(this);
         mFloatingActionButtonImageResIdList = new ArrayList<Integer>();
-        mFloatingActionButtonImageResIdList.add(R.drawable.abc_btn_rating_star_off_mtrl_alpha);//已添加到收藏
-        mFloatingActionButtonImageResIdList.add(R.drawable.abc_btn_rating_star_on_mtrl_alpha);//未添加到收藏
         mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_border_white_48dp);
         mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_white_48dp);
-        mFloatingActionButtonImageResIdList.add(R.drawable.ic_explore_white_48dp);
-        mFloatingActionButtonImageResIdList.add(R.drawable.ic_supervisor_account_white_48dp);
         mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
         mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
+        mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tab1 = mTabLayout.newTab().setText("Tab1");
+        tab1.select();
+        tab2 = mTabLayout.newTab().setText("Tab2");
+        tab3 = mTabLayout.newTab().setText("Tab3");
+        mTabLayout.addTab(tab1);
+        mTabLayout.addTab(tab2);
+        mTabLayout.addTab(tab3);
+        mTabLayout.setOnTabSelectedListener(this);
     }
 
     @Override
@@ -88,7 +100,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.floatingActionButton:
                 mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
                 mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
+                showSnackbar(mCurrentColorIndex % 2 == 0 ? "已添加收藏" : "已取消收藏", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
         }
+    }
+
+    private void showSnackbar(String msg, View.OnClickListener listener) {
+        Snackbar
+                .make(findViewById(R.id.relativeLayout), R.string.prompt, Snackbar.LENGTH_LONG)
+                .setAction(msg, listener).setActionTextColor(0xffffffff)
+                .show(); // Don’t forget to show!
+    }
+
+    @Override
+    public void onTabSelected(Tab tab) {
+    }
+
+    @Override
+    public void onTabUnselected(Tab tab) {
+    }
+
+    @Override
+    public void onTabReselected(Tab tab) {
     }
 }

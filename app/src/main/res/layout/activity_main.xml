@@ -8,8 +8,14 @@
     <!-- your content layout -->
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.design.widget.TabLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
@@ -17,10 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp" />
-    </RelativeLayout>
+            android:layout_margin="10dp" />
 
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigationView"

@@ -5,4 +5,5 @@
     <string name="search">搜索</string>
     <string name="menu">菜单</string>
     <string name="about">关于</string>
+    <string name="prompt">提示</string>
 </resources>
