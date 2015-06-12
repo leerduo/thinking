@@ -100,17 +100,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.floatingActionButton:
                 mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
                 mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
-                showSnackbar(mCurrentColorIndex % 2 == 0 ? "已添加收藏" : "已取消收藏", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
                 break;
         }
     }
 
-    private void showSnackbar(String msg, View.OnClickListener listener) {
+    protected void showSnackbar(String msg, View.OnClickListener listener) {
         Snackbar
                 .make(findViewById(R.id.relativeLayout), R.string.prompt, Snackbar.LENGTH_LONG)
                 .setAction(msg, listener).setActionTextColor(0xffffffff)
