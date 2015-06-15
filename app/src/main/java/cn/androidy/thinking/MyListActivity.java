@@ -1,6 +1,5 @@
 package cn.androidy.thinking;
 
-import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,7 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +18,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cn.androidy.thinking.network.Callback;
-import cn.androidy.thinking.network.NetworkManager;
 
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TabLayout.OnTabSelectedListener {
+public class MyListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TabLayout.OnTabSelectedListener {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBar mActionBar;
@@ -38,10 +34,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mActionBar = getSupportActionBar();
-        mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_48pt);
-        mActionBar.setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_my_list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
@@ -61,23 +59,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mTabLayout.addTab(tab2);
         mTabLayout.addTab(tab3);
         mTabLayout.setOnTabSelectedListener(this);
-        NetworkManager.get("http://www.tuling123.com/openapi/api?key=6eb1a81c8d49c562115f2ec55207c9f6&info=周杰伦演唱会", new Callback() {
-            @Override
-            public void onSucc(String result) {
-                Log.d("mwp", result);
-            }
-
-            @Override
-            public void onFail(Throwable t) {
-
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_my_list, menu);
         return true;
     }
 
@@ -89,8 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == android.R.id.home) {
-            mDrawerLayout.openDrawer(mNavigationView);
+        if (id == R.id.action_search) {
+            return true;
+        } else if (id == android.R.id.home) {
+            finish();
             return true;
         }
 
@@ -101,12 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
         if (id == R.id.action_about) {
-            menuItem.setChecked(true);
-            startActivity(new Intent(this, MyListActivity.class));
             mDrawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.action_settings) {
-            menuItem.setChecked(true);
             mDrawerLayout.closeDrawers();
             return true;
         }

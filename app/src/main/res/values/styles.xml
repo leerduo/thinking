@@ -3,6 +3,23 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <!--DarkActionBar 的默认colorPrimaryDark primary_dark_material_dark-->
+        <item name="colorPrimaryDark">#43A047</item>
+        <!--DarkActionBar 的默认colorPrimary primary_material_dark-->
+        <item name="colorPrimary">#4CAF50</item>
+        <!--DarkActionBar 的默认colorAccent accent_material_light-->
+        <item name="colorAccent">#FFA726</item>
+        <!--DarkActionBar 的默认windowBackground background_material_light-->
+        <item name="android:windowBackground">@color/background_material_light</item>
     </style>
-
+    <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--DarkActionBar 的默认colorPrimaryDark primary_dark_material_dark-->
+        <item name="colorPrimaryDark">#43A047</item>
+        <!--DarkActionBar 的默认colorPrimary primary_material_dark-->
+        <item name="colorPrimary">#4CAF50</item>
+        <!--DarkActionBar 的默认colorAccent accent_material_light-->
+        <item name="colorAccent">#FFA726</item>
+        <!--DarkActionBar 的默认windowBackground background_material_light-->
+        <item name="android:windowBackground">@color/background_material_light</item>
+    </style>
 </resources>
