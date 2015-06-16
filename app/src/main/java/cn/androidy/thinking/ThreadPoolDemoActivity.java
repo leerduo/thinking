@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.executor.FifoPriorityThreadPoolExecutor;
 import com.example.android.common.activities.SampleActivityBase;
 import com.example.android.common.logger.Log;
 import com.example.android.common.logger.LogFragment;
@@ -17,17 +17,12 @@ import com.example.android.common.logger.MessageOnlyLogFilter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
 
-import cn.androidy.thinking.concurrent.MyFifoPriorityThreadPoolExecutor;
 import cn.androidy.thinking.concurrent.PrioritizedRunnable;
 import cn.androidy.thinking.concurrent.ThreadJob;
-import cn.androidy.thinking.concurrent.ThreadJobCallback;
 import cn.androidy.thinking.concurrent.ThreadResultConsumer;
-import cn.androidy.thinking.constant.Constants;
 
 /**
  * Created by Rick Meng on 2015/6/16.
@@ -41,7 +36,7 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
     private ArrayList<Integer> mFloatingActionButtonImageResIdList;
     private int mCurrentColorIndex = 0;
     private ThreadJob threadJob;
-    private MyFifoPriorityThreadPoolExecutor fifoPriorityThreadPoolExecutor;
+    private FifoPriorityThreadPoolExecutor fifoPriorityThreadPoolExecutor;
     private ImageView imageView;
     private Random r;
 
@@ -63,7 +58,7 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
 //        Glide.with(this).load(Constants.IMG_URL).into(imageView);
 
         final int cores = Math.max(1, getAvailableProcessors());
-        fifoPriorityThreadPoolExecutor = new MyFifoPriorityThreadPoolExecutor(1);
+        fifoPriorityThreadPoolExecutor = new FifoPriorityThreadPoolExecutor(cores);
     }
 
     private String createThreadName() {
