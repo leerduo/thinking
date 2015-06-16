@@ -27,7 +27,7 @@ import cn.androidy.thinking.concurrent.ThreadResultConsumer;
 /**
  * Created by Rick Meng on 2015/6/16.
  */
-public class ThreadPoolDemoActivity extends SampleActivityBase implements View.OnClickListener, ThreadResultConsumer {
+public class ThreadPoolDemoActivity extends SampleActivityBase implements View.OnClickListener, ThreadResultConsumer, View.OnLongClickListener {
     public static final String TAG = "ThreadPoolDemoActivity";
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
@@ -35,11 +35,10 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
     private FloatingActionButton mFloatingActionButton;
     private ArrayList<Integer> mFloatingActionButtonImageResIdList;
     private int mCurrentColorIndex = 0;
-    private ThreadJob threadJob;
     private FifoPriorityThreadPoolExecutor fifoPriorityThreadPoolExecutor;
     private ImageView imageView;
     private Random r;
-
+    private ThreadJob mLastJob;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +47,7 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         mFloatingActionButton.setOnClickListener(this);
+        mFloatingActionButton.setOnLongClickListener(this);
         mFloatingActionButtonImageResIdList = new ArrayList<Integer>();
         mFloatingActionButtonImageResIdList.add(R.drawable.ic_add_white_48dp);
         mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
@@ -117,8 +117,8 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
         int id = v.getId();
         switch (id) {
             case R.id.floatingActionButton:
-                threadJob = new ThreadJob(fifoPriorityThreadPoolExecutor, this);
-                threadJob.start(new PrioritizedRunnable(threadJob, createThreadName(), r.nextInt(100)));
+                mLastJob = new ThreadJob(fifoPriorityThreadPoolExecutor, this);
+                mLastJob.start(new PrioritizedRunnable(mLastJob, createThreadName(), r.nextInt(100)));
                 mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
                 break;
         }
@@ -127,5 +127,16 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
     @Override
     public void onJobComplete(ThreadJob job) {
         Log.i(TAG, job.printRunnableInfo());
+    }
+
+    @Override
+    public void onJobCanceled(ThreadJob job) {
+        Log.i(TAG, job.printRunnableInfo() + "--->取消");
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        mLastJob.cancel();
+        return true;
     }
 }

@@ -20,6 +20,7 @@ public class ThreadJob implements ThreadJobCallback {
     private static final int MSG_COMPLETE = 1;
     private static final int MSG_EXCEPTION = 2;
     private ThreadResultConsumer consumer;
+    private boolean isCancelled;
 
     public ThreadJob(ExecutorService es) {
         executorService = es;
@@ -74,4 +75,13 @@ public class ThreadJob implements ThreadJobCallback {
 
     }
 
+    public void cancel() {
+        runnable.cancel();
+        consumer.onJobCanceled(this);
+        Future currentFuture = future;
+        if (currentFuture != null) {
+            currentFuture.cancel(true);
+        }
+        isCancelled = true;
+    }
 }

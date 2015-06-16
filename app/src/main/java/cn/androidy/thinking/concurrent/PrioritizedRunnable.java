@@ -11,6 +11,7 @@ public class PrioritizedRunnable implements Runnable, Prioritized {
     private final int priority;
     private ThreadJobCallback callback;
     private String name;
+    private volatile boolean isCancelled;
 
     public PrioritizedRunnable(ThreadJobCallback callback, String name, int priority) {
         this.callback = callback;
@@ -35,5 +36,9 @@ public class PrioritizedRunnable implements Runnable, Prioritized {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void cancel() {
+        isCancelled = true;
     }
 }

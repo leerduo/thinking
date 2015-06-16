@@ -5,4 +5,6 @@ package cn.androidy.thinking.concurrent;
  */
 public interface ThreadResultConsumer {
     public void onJobComplete(ThreadJob job);
+
+    public void onJobCanceled(ThreadJob job);
 }
