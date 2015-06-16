@@ -6,5 +6,6 @@
     <string name="menu">菜单</string>
     <string name="about">关于</string>
     <string name="prompt">提示</string>
-    <string name="title_activity_my_list">MyListActivity</string>
+    <string name="title_activity_my_list">Demo列表</string>
+    <string name="title_activity_thread_pool_demo">线程池</string>
 </resources>

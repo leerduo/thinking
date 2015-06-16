@@ -21,6 +21,9 @@
         <activity
             android:name=".DemoListActivity"
             android:label="@string/title_activity_my_list"></activity>
+        <activity
+            android:name=".ThreadPoolDemoActivity"
+            android:label="@string/title_activity_thread_pool_demo"></activity>
     </application>
 
 </manifest>

@@ -20,13 +20,10 @@ import cn.androidy.thinking.demos.BaseDemo;
 import cn.androidy.thinking.demos.IDemoEntry;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBar mActionBar;
-    private FloatingActionButton mFloatingActionButton;
-    private ArrayList<Integer> mFloatingActionButtonImageResIdList;
-    private int mCurrentColorIndex = 0;
     private RecyclerView mRecyclerView;
     LinearLayoutManager mLayoutManager;
     private List<IDemoEntry> mList = new ArrayList<IDemoEntry>();
@@ -41,13 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        mFloatingActionButton.setOnClickListener(this);
-        mFloatingActionButtonImageResIdList = new ArrayList<Integer>();
-        mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_border_white_48dp);
-        mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_white_48dp);
-        mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
-        mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(mRecyclerView.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -91,14 +81,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.floatingActionButton:
-                mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
-                mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
-                break;
-        }
-    }
 }
