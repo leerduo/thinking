@@ -14,6 +14,7 @@ import java.util.List;
 
 import cn.androidy.thinking.adapters.DemoAdapter;
 import cn.androidy.thinking.demos.IDemoEntry;
+import cn.androidy.thinking.demos.LyricDemo;
 import cn.androidy.thinking.demos.ThreadPoolDemo;
 
 
@@ -33,6 +34,7 @@ public class DemoListActivity extends AppCompatActivity implements View.OnClickL
         mLayoutManager = new LinearLayoutManager(mRecyclerView.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mList.add(new ThreadPoolDemo());
+        mList.add(new LyricDemo());
         mRecyclerView.setAdapter(new DemoAdapter(this, mList));
     }
 

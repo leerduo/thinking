@@ -19,9 +19,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/log_fragment"
-        android:name="com.example.android.common.logger.LogFragment"
+    <cn.androidy.thinking.views.LyricView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -36,7 +36,6 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
     private ArrayList<Integer> mFloatingActionButtonImageResIdList;
     private int mCurrentColorIndex = 0;
     private FifoPriorityThreadPoolExecutor fifoPriorityThreadPoolExecutor;
-    private ImageView imageView;
     private Random r;
     private ThreadJob mLastJob;
 
@@ -54,10 +53,6 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
         mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
         mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
         r = new Random();
-        imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setVisibility(View.GONE);
-//        Glide.with(this).load(Constants.IMG_URL).into(imageView);
-
         final int cores = Math.max(1, getAvailableProcessors());
         fifoPriorityThreadPoolExecutor = new FifoPriorityThreadPoolExecutor(cores);
     }
