@@ -1,39 +1,35 @@
 package cn.androidy.thinking;
 
-import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import cn.androidy.thinking.network.Callback;
-import cn.androidy.thinking.network.NetworkManager;
+import cn.androidy.thinking.adapters.DemoAdapter;
+import cn.androidy.thinking.demos.BaseDemo;
+import cn.androidy.thinking.demos.IDemoEntry;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TabLayout.OnTabSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBar mActionBar;
     private FloatingActionButton mFloatingActionButton;
     private ArrayList<Integer> mFloatingActionButtonImageResIdList;
     private int mCurrentColorIndex = 0;
-    private TabLayout mTabLayout;
-    private Tab tab1;
-    private Tab tab2;
-    private Tab tab3;
+    private RecyclerView mRecyclerView;
+    LinearLayoutManager mLayoutManager;
+    private List<IDemoEntry> mList = new ArrayList<IDemoEntry>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,26 +48,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_white_48dp);
         mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
         mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
-        mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tab1 = mTabLayout.newTab().setText("Tab1");
-        tab1.select();
-        tab2 = mTabLayout.newTab().setText("Tab2");
-        tab3 = mTabLayout.newTab().setText("Tab3");
-        mTabLayout.addTab(tab1);
-        mTabLayout.addTab(tab2);
-        mTabLayout.addTab(tab3);
-        mTabLayout.setOnTabSelectedListener(this);
-        NetworkManager.get("http://www.tuling123.com/openapi/api?key=6eb1a81c8d49c562115f2ec55207c9f6&info=周杰伦演唱会", new Callback() {
-            @Override
-            public void onSucc(String result) {
-                Log.d("mwp", result);
-            }
-
-            @Override
-            public void onFail(Throwable t) {
-
-            }
-        });
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mLayoutManager = new LinearLayoutManager(mRecyclerView.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mList.add(new BaseDemo());
+        mRecyclerView.setAdapter(new DemoAdapter(this, mList));
     }
 
     @Override
@@ -101,12 +82,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
         if (id == R.id.action_about) {
-            menuItem.setChecked(true);
-            startActivity(new Intent(this, MyListActivity.class));
             mDrawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.action_settings) {
-            menuItem.setChecked(true);
             mDrawerLayout.closeDrawers();
             return true;
         }
@@ -122,24 +100,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
                 break;
         }
-    }
-
-    protected void showSnackbar(String msg, View.OnClickListener listener) {
-        Snackbar
-                .make(findViewById(R.id.relativeLayout), R.string.prompt, Snackbar.LENGTH_LONG)
-                .setAction(msg, listener).setActionTextColor(0xffffffff)
-                .show(); // Don’t forget to show!
-    }
-
-    @Override
-    public void onTabSelected(Tab tab) {
-    }
-
-    @Override
-    public void onTabUnselected(Tab tab) {
-    }
-
-    @Override
-    public void onTabReselected(Tab tab) {
     }
 }
