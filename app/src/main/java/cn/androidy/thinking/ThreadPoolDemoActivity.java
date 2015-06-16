@@ -39,6 +39,7 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
     private ImageView imageView;
     private Random r;
     private ThreadJob mLastJob;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +137,10 @@ public class ThreadPoolDemoActivity extends SampleActivityBase implements View.O
 
     @Override
     public boolean onLongClick(View v) {
-        mLastJob.cancel();
-        return true;
+        if (mLastJob != null) {
+            mLastJob.cancel();
+            return true;
+        }
+        return false;
     }
 }
