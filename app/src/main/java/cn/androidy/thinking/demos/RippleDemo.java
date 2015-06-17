@@ -22,6 +22,6 @@ public class RippleDemo implements IDemoEntry {
 
     @Override
     public boolean isMember(DemoFamily demoFamily) {
-        return demoFamily == DemoFamily.SQUARE || demoFamily == DemoFamily.ALL;
+        return demoFamily == DemoFamily.ALL;
     }
 }
