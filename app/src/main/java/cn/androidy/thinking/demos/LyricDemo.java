@@ -11,7 +11,7 @@ import cn.androidy.thinking.LyricViewActivity;
 public class LyricDemo implements IDemoEntry {
     @Override
     public String getDemoTitle() {
-        return "歌词";
+        return "歌词逐字渲染";
     }
 
     @Override

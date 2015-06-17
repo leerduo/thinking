@@ -8,7 +8,7 @@
     <string name="prompt">提示</string>
     <string name="title_activity_my_list">Demo列表</string>
     <string name="title_activity_thread_pool_demo">线程池</string>
-    <string name="title_activity_lyric_view">歌词</string>
+    <string name="title_activity_lyric_view">歌词逐字渲染</string>
     <string name="title_activity_weather">天气</string>
     <string name="title_activity_calendar_picker_view">日历选择</string>
     <string name="title_activity_demo_detail_base">DemoDetailBaseActivity</string>

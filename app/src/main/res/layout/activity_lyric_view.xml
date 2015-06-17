@@ -14,15 +14,45 @@
   limitations under the License.
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sample_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <cn.androidy.thinking.views.LrcView
-        android:id="@+id/lrcView"
+    <cn.androidy.thinking.views.ColorTrackView
+        android:id="@+id/colorTrackView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        app:progress="0"
+        app:text="字体或者图片可以逐渐染色和逐渐褪色的动画效果"
+        app:text_change_color="#ff4caf50"
+        app:text_origin_color="#ff000000"
+        app:text_size="22sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/id_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startLeftChange"
+            android:text="StartLeft" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/id_left"
+            android:onClick="startRightChange"
+            android:text="StartRight" />
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
