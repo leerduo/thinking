@@ -217,4 +217,23 @@ public class ColorTrackView extends View {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 dpVal, getResources().getDisplayMetrics());
     }
+
+
+    private static class TextDrawUnit {
+        public String text;
+        public int startX;
+        public int endX;
+        public int height;
+        public int startY;
+        public int color;
+
+        public void onDraw(Canvas canvas, Paint paint) {
+            paint.setColor(color);
+            canvas.save(Canvas.CLIP_SAVE_FLAG);
+            canvas.clipRect(startX, 0, endX, height);
+            canvas.drawText(text, startX, startY, paint);
+            canvas.restore();
+        }
+    }
+
 }
