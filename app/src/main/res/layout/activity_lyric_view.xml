@@ -20,17 +20,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <cn.androidy.thinking.views.ColorTrackView
         android:id="@+id/colorTrackView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
         android:padding="10dp"
         app:progress="0"
         app:text="字体或者图片可以逐渐染色和逐渐褪色的动画效果"
         app:text_change_color="#ff4caf50"
         app:text_origin_color="#ff000000"
         app:text_size="22sp" />
+
+    <fragment
+        android:id="@+id/log_fragment"
+        android:name="com.example.android.common.logger.LogFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/colorTrackView" />
 
     <LinearLayout
         android:layout_width="match_parent"

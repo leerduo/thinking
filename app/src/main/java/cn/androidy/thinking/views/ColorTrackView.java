@@ -41,7 +41,7 @@ public class ColorTrackView extends View {
     private Rect mTextBound = new Rect();
     private int mTextWidth;
 
-    private int mRealWidth;
+    private int mMaxTextWidth;
 
     private float mProgress;
 
@@ -72,19 +72,15 @@ public class ColorTrackView extends View {
         ta.recycle();
 
         mPaint.setTextSize(mTextSize);
-        measureText();
-
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = measureWidth(widthMeasureSpec);
-        int height = measureHeight(heightMeasureSpec);
-        setMeasuredDimension(width, height);
-
-        mRealWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-        mTextStartX = mRealWidth / 2 - mTextWidth / 2;
-
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width = getMeasuredWidth();
+        mMaxTextWidth = width - getPaddingLeft() - getPaddingRight();
+        mTextWidth = Math.min(mMaxTextWidth, measureText(mText));
+        mTextStartX = width / 2 - mTextWidth / 2;
     }
 
     private int measureHeight(int measureSpec) {
@@ -122,9 +118,10 @@ public class ColorTrackView extends View {
         return result + getPaddingLeft() + getPaddingRight();
     }
 
-    private void measureText() {
-        mTextWidth = (int) mPaint.measureText(mText);
-        mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
+    private int measureText(String text) {
+        int w = (int) mPaint.measureText(text);
+        mPaint.getTextBounds(mText, 0, text.length(), mTextBound);
+        return w;
     }
 
     public void reverseColor() {
