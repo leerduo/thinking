@@ -8,5 +8,6 @@
     <string name="prompt">提示</string>
     <string name="title_activity_my_list">Demo列表</string>
     <string name="title_activity_thread_pool_demo">线程池</string>
-    <string name="title_activity_lyric_view">LyricViewActivity</string>
+    <string name="title_activity_lyric_view">歌词</string>
+    <string name="title_activity_weather">天气</string>
 </resources>

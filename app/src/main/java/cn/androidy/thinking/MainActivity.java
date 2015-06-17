@@ -1,5 +1,6 @@
 package cn.androidy.thinking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         } else if (id == R.id.action_settings) {
             mDrawerLayout.closeDrawers();
+            return true;
+        } else if (id == R.id.action_weather) {
+            mDrawerLayout.closeDrawers();
+            startActivity(new Intent(this, WeatherActivity.class));
             return true;
         }
         return false;
