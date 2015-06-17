@@ -19,7 +19,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <cn.androidy.thinking.views.LyricView
+    <cn.androidy.thinking.views.LrcView
+        android:id="@+id/lrcView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
