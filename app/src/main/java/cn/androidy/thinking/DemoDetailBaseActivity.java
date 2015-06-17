@@ -13,7 +13,7 @@ import com.example.android.common.activities.SampleActivityBase;
 import java.util.ArrayList;
 
 
-public class DemoDetailBaseActivity extends SampleActivityBase implements View.OnClickListener {
+public abstract class DemoDetailBaseActivity extends SampleActivityBase implements View.OnClickListener {
     protected FloatingActionButton mFloatingActionButton;
     protected ArrayList<Integer> mFloatingActionButtonImageResIdList;
     protected int mCurrentColorIndex = 0;
@@ -22,13 +22,32 @@ public class DemoDetailBaseActivity extends SampleActivityBase implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo_detail_base);
+        setContentView(getLayoutId());
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
+        initFloatingFloatingActionButton();
     }
 
-    protected void initFloatingFloatingActionButton() {
+    protected abstract int getLayoutId();
 
+    protected abstract int getFloatingActionButtonId();
+
+    protected void initFloatingFloatingActionButton() {
+        mFloatingActionButton = (FloatingActionButton) findViewById(getFloatingActionButtonId());
+        if (mFloatingActionButton == null) {
+            return;
+        }
+        mFloatingActionButton.setOnClickListener(this);
+        mFloatingActionButtonImageResIdList = new ArrayList<Integer>();
+        mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_border_white_48dp);
+        mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_white_48dp);
+        mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
+        mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
+    }
+
+    protected void onFloatingActionButtonClicked() {
+        mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
+        mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
     }
 
     @Override
@@ -55,7 +74,11 @@ public class DemoDetailBaseActivity extends SampleActivityBase implements View.O
 
     @Override
     public void onClick(View v) {
-
+        int id = v.getId();
+        if (id == getFloatingActionButtonId()) {
+            onFloatingActionButtonClicked();
+            return;
+        }
     }
 
 }

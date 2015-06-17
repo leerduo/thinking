@@ -1,5 +1,6 @@
 package cn.androidy.thinking;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,21 +15,26 @@ import java.util.Date;
 
 import cn.androidy.thinking.R;
 
-public class CalendarPickerViewActivity extends SampleActivityBase {
-    private ActionBar mActionBar;
-
+public class CalendarPickerViewActivity extends DemoDetailBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar_picker_view);
-        mActionBar = getSupportActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
         CalendarPickerView calendar = (CalendarPickerView) findViewById(R.id.calendar_view);
         Date today = new Date();
         calendar.init(today, nextYear.getTime())
                 .withSelectedDate(today);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_calendar_picker_view;
+    }
+
+    @Override
+    protected int getFloatingActionButtonId() {
+        return R.id.floatingActionButton;
     }
 
     @Override
