@@ -19,4 +19,8 @@ public class ThreadPoolDemo implements IDemoEntry {
     public void demonstrate(Context context) {
         context.startActivity(new Intent(context, ThreadPoolDemoActivity.class));
     }
+    @Override
+    public boolean isMember(DemoFamily demoFamily) {
+        return demoFamily == DemoFamily.ALL;
+    }
 }

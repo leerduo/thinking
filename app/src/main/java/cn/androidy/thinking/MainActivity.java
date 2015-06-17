@@ -2,7 +2,6 @@ package cn.androidy.thinking;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -11,13 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.androidy.thinking.adapters.DemoAdapter;
-import cn.androidy.thinking.demos.BaseDemo;
+import cn.androidy.thinking.demos.AllDemo;
+import cn.androidy.thinking.demos.DemoListBuilder;
 import cn.androidy.thinking.demos.IDemoEntry;
 
 
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(mRecyclerView.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mList.add(new BaseDemo());
+        mList = DemoListBuilder.getDemoEntryList();
         mRecyclerView.setAdapter(new DemoAdapter(this, mList));
     }
 

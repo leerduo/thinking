@@ -18,4 +18,9 @@ public class LyricDemo implements IDemoEntry {
     public void demonstrate(Context context) {
         context.startActivity(new Intent(context, LyricViewActivity.class));
     }
+
+    @Override
+    public boolean isMember(DemoFamily demoFamily) {
+        return demoFamily == DemoFamily.ALL;
+    }
 }

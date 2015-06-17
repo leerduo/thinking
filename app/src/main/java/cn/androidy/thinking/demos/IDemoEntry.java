@@ -12,4 +12,28 @@ public interface IDemoEntry {
 
     //演示demo
     public void demonstrate(Context context);
+
+    //划分属于哪一类demo
+    public boolean isMember(DemoFamily demoFamily);
+
+    public static enum DemoFamily {
+        SQUARE("Square开源家族"), ALL("全部Demo");
+        private String name;
+
+        private DemoFamily(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public static DemoFamily getDemoFamilyFromKeyword(String keyword) {
+            if (SQUARE.getName().equals(keyword)) {
+                return SQUARE;
+            } else {
+                return ALL;
+            }
+        }
+    }
 }
