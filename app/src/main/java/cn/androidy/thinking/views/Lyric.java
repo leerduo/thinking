@@ -31,8 +31,12 @@ public class Lyric {
             divProgress = (progress - startProgress) / progressLength;
         }
         int dividorPosition = (int) (divProgress * textWidth + startX);
-        drawText(canvas, paint, colorChange, startX, dividorPosition);
-        drawText(canvas, paint, color, dividorPosition, startX + textWidth);
+        if (divProgress < 1.0f && divProgress > 0) {
+            drawText(canvas, paint, colorChange, startX, dividorPosition);
+            drawText(canvas, paint, color, dividorPosition, startX + textWidth);
+        } else {
+            drawText(canvas, paint, color, startX, startX + textWidth);
+        }
     }
 
     private void drawText(Canvas canvas, Paint paint, int color, int dividorPosition, int endX) {
