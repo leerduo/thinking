@@ -13,4 +13,5 @@
     <string name="title_activity_calendar_picker_view">日历选择</string>
     <string name="title_activity_demo_detail_base">DemoDetailBaseActivity</string>
     <string name="title_activity_ripple">RippleActivity</string>
+    <string name="title_activity_banner">BannerActivity</string>
 </resources>

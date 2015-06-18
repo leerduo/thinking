@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Rick Meng on 2015/6/17.
  */
 public class DemoListBuilder {
-    private static final IDemoEntry DEMO_ARRAY[] = new IDemoEntry[]{new ThreadPoolDemo(), new LyricDemo(), new SquareTimesDemo(), new RippleDemo()};
+    private static final IDemoEntry DEMO_ARRAY[] = new IDemoEntry[]{new ThreadPoolDemo(), new LyricDemo(), new SquareTimesDemo(), new RippleDemo(), new BannerDemo()};
 
     public static List<IDemoEntry> buildDemoList(IDemoEntry.DemoFamily demoFamily) {
         if (demoFamily == null || demoFamily == IDemoEntry.DemoFamily.ALL) {
@@ -26,8 +26,9 @@ public class DemoListBuilder {
 
     public static List<IDemoEntry> getDemoEntryList() {
         ArrayList<IDemoEntry> result = new ArrayList<IDemoEntry>();
-        result.add(new AllDemo(IDemoEntry.DemoFamily.ALL, "全部Demo"));
-        result.add(new AllDemo(IDemoEntry.DemoFamily.SQUARE, "Square开源家族"));
+        result.add(new AllDemo(IDemoEntry.DemoFamily.ALL));
+        result.add(new AllDemo(IDemoEntry.DemoFamily.SQUARE));
+        result.add(new AllDemo(IDemoEntry.DemoFamily.SINGWHATIWANNA));
         return result;
     }
 }

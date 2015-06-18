@@ -45,6 +45,10 @@
             android:name=".RippleActivity"
             android:label="@string/title_activity_ripple" >
         </activity>
+        <activity
+            android:name=".BannerActivity"
+            android:label="@string/title_activity_banner" >
+        </activity>
     </application>
 
 </manifest>

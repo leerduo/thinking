@@ -12,8 +12,8 @@ public class AllDemo implements IDemoEntry {
     private DemoFamily demoFamily;
     private String demoName;
 
-    public AllDemo(String demoName) {
-        this.demoName = demoName;
+    public AllDemo(DemoFamily demoFamily) {
+        this(demoFamily, demoFamily.getName());
     }
 
     public AllDemo(DemoFamily demoFamily, String demoName) {
