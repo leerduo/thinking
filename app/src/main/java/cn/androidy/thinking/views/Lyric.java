@@ -11,7 +11,7 @@ public class Lyric {
     public int startX;
     public int textWidth;
     public int height;
-    public int startY;
+    public float startY;
     public int color;
     public int colorChange;
     public float startProgress;
@@ -21,7 +21,13 @@ public class Lyric {
         this.text = text;
     }
 
-    public void onDraw(Canvas canvas, Paint paint, float progress) {
+    /**
+     * @param canvas
+     * @param paint
+     * @param progress
+     * @return 如果是正在渲染的歌词，返回true。
+     */
+    public boolean onDraw(Canvas canvas, Paint paint, float progress) {
         float divProgress = 0;
         if (progress > startProgress + progressLength) {
             divProgress = 1.0f;
@@ -34,9 +40,11 @@ public class Lyric {
         if (divProgress < 1.0f && divProgress > 0) {
             drawText(canvas, paint, colorChange, startX, dividorPosition);
             drawText(canvas, paint, color, dividorPosition, startX + textWidth);
+            return true;
         } else {
             drawText(canvas, paint, color, startX, startX + textWidth);
         }
+        return false;
     }
 
     private void drawText(Canvas canvas, Paint paint, int color, int dividorPosition, int endX) {

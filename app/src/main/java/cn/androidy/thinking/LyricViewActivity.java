@@ -65,7 +65,7 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
 
     public void startLeftChange(View view) {
         mColorTrackView.setDirection(0);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mColorTrackView, "progress", 0, 1).setDuration(20 * 1000);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mColorTrackView, "progress", 0, 1).setDuration(30 * 1000);
         animator.setInterpolator(new LinearInterpolator());
         animator.start();
     }
