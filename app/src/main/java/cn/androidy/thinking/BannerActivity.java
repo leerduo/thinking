@@ -195,6 +195,9 @@ public class BannerActivity extends DemoDetailBaseActivity implements Runnable {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == android.R.id.home) {
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
