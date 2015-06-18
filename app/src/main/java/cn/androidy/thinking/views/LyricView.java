@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.ArrayList;
@@ -79,7 +78,7 @@ public class LyricView extends View implements ValueAnimator.AnimatorUpdateListe
             animator.cancel();
             isPlaying = false;
         } else {
-            animator = ValueAnimator.ofFloat(mProgress, 1).setDuration((long) (30 * 1000 * (1 - mProgress)));
+            animator = ValueAnimator.ofFloat(mProgress, 1).setDuration((long) (10 * 1000 * (1 - mProgress)));
             animator.setInterpolator(new LinearInterpolator());
             animator.addUpdateListener(this);
             animator.addListener(this);
@@ -87,18 +86,42 @@ public class LyricView extends View implements ValueAnimator.AnimatorUpdateListe
         }
     }
 
+    //测试文字剪切
+    private String testClipRectText = "这段文字会被切成两半";
+    private int mTestTextStartX;
+    private int mTestTextWidth;
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = getMeasuredWidth();
         mMaxTextWidth = width - getPaddingLeft() - getPaddingRight();
+        mTestTextWidth = Math.min(mMaxTextWidth, measureText(testClipRectText, mPaint));
+        mTestTextStartX = mMaxTextWidth / 2 - mTestTextWidth / 2;
         lyricManager.confirmLyricState(getMeasuredWidth(), getMeasuredHeight(), mTextOriginColor, mTextChangeColor, mMaxTextWidth, mPaint);
+    }
+
+    private int measureText(String text, Paint paint) {
+        int w = (int) paint.measureText(text);
+        return w;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         lyricManager.dispatchDraw(canvas, mPaint, mProgress);
+
+        mPaint.setColor(mTextOriginColor);
+        canvas.save(Canvas.CLIP_SAVE_FLAG);
+        int divPosition = mTestTextStartX + mTestTextWidth / 3;
+        canvas.clipRect(mTestTextStartX, 0, divPosition, getMeasuredHeight());
+        canvas.drawText(testClipRectText, mTestTextStartX, 120, mPaint);
+        canvas.restore();
+
+        mPaint.setColor(mTextChangeColor);
+        canvas.clipRect(divPosition, 0, mTestTextStartX + mTestTextWidth, getMeasuredHeight());
+        canvas.drawText(testClipRectText, mTestTextStartX, 240, mPaint);
+        canvas.restore();
     }
 
     private int sp2px(float dpVal) {

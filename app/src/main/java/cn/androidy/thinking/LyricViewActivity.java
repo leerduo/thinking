@@ -96,6 +96,5 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
         LogFragment logFragment = (LogFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.log_fragment);
         msgFilter.setNext(logFragment.getLogView());
-        Log.i(TAG, "Ready");
     }
 }
