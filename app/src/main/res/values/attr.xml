@@ -11,7 +11,7 @@
         <enum name="right" value="1" />
     </attr>
 
-    <declare-styleable name="ColorTrackView">
+    <declare-styleable name="LyricView">
         <attr name="text" />
         <attr name="text_size" />
         <attr name="text_origin_color" />

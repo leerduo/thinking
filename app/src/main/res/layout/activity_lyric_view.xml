@@ -21,7 +21,7 @@
     android:orientation="vertical">
 
 
-    <cn.androidy.thinking.views.ColorTrackView
+    <cn.androidy.thinking.views.LyricView
         android:id="@+id/colorTrackView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,18 +47,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/id_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="startLeftChange"
-            android:text="StartLeft" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/id_left"
-            android:onClick="startRightChange"
-            android:text="StartRight" />
+            android:onClick="startPlay"
+            android:text="start" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

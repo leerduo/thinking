@@ -17,7 +17,7 @@ import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.util.ArrayList;
 
-import cn.androidy.thinking.views.ColorTrackView;
+import cn.androidy.thinking.views.LyricView;
 
 /**
  * Created by Rick Meng on 2015/6/16.
@@ -29,7 +29,7 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
     private FloatingActionButton mFloatingActionButton;
     private ArrayList<Integer> mFloatingActionButtonImageResIdList;
     private int mCurrentColorIndex = 0;
-    private ColorTrackView mColorTrackView;
+    private LyricView mColorTrackView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
         mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_white_48dp);
         mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
         mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
-        mColorTrackView = (ColorTrackView) findViewById(R.id.colorTrackView);
+        mColorTrackView = (LyricView) findViewById(R.id.colorTrackView);
     }
 
     @Override
@@ -63,8 +63,7 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
         return super.onOptionsItemSelected(item);
     }
 
-    public void startLeftChange(View view) {
-        mColorTrackView.setDirection(0);
+    public void startPlay(View view) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(mColorTrackView, "progress", 0, 1).setDuration(30 * 1000);
         animator.setInterpolator(new LinearInterpolator());
         animator.start();
