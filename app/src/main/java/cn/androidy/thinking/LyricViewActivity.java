@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 import com.example.android.common.activities.SampleActivityBase;
 import com.example.android.common.logger.Log;
@@ -64,14 +65,9 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
 
     public void startLeftChange(View view) {
         mColorTrackView.setDirection(0);
-        ObjectAnimator.ofFloat(mColorTrackView, "progress", 0, 1).setDuration(2000)
-                .start();
-    }
-
-    public void startRightChange(View view) {
-        mColorTrackView.setDirection(1);
-        ObjectAnimator.ofFloat(mColorTrackView, "progress", 0, 1).setDuration(2000)
-                .start();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mColorTrackView, "progress", 0, 1).setDuration(20 * 1000);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.start();
     }
 
     @Override

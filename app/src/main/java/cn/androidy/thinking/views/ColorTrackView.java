@@ -9,6 +9,9 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.androidy.thinking.R;
 
 /**
@@ -45,6 +48,8 @@ public class ColorTrackView extends View {
 
     private float mProgress;
 
+    private LyricManager lyricManager;
+
     public ColorTrackView(Context context) {
         super(context, null);
     }
@@ -72,6 +77,19 @@ public class ColorTrackView extends View {
         ta.recycle();
 
         mPaint.setTextSize(mTextSize);
+
+        List<String> list = new ArrayList<String>();
+        list.add("风吹雨成花");
+        list.add("时间追不上白马");
+        list.add("你年少掌心的梦话");
+        list.add("依然紧握着吗");
+
+        list.add("云翻涌成夏");
+        list.add(" 眼泪被岁月蒸发");
+        list.add("这条路上的你我她");
+        list.add(" 有谁迷路了吗");
+
+        lyricManager = new LyricManager(list, getResources().getDisplayMetrics());
     }
 
     @Override
@@ -81,6 +99,7 @@ public class ColorTrackView extends View {
         mMaxTextWidth = width - getPaddingLeft() - getPaddingRight();
         mTextWidth = Math.min(mMaxTextWidth, measureText(mText));
         mTextStartX = width / 2 - mTextWidth / 2;
+        lyricManager.confirmLyricState(getMeasuredWidth(), getMeasuredHeight(), mTextOriginColor, mTextChangeColor, mMaxTextWidth, mPaint);
     }
 
     private int measureHeight(int measureSpec) {
@@ -133,42 +152,7 @@ public class ColorTrackView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int r = (int) (mProgress * mTextWidth + mTextStartX);
-
-        if (mDirection == DIRECTION_LEFT) {
-            drawChangeLeft(canvas, r);
-            drawOriginLeft(canvas, r);
-        } else {
-            drawOriginRight(canvas, r);
-            drawChangeRight(canvas, r);
-        }
-
-
-    }
-
-    private void drawText(Canvas canvas, int color, int startX, int endX) {
-        mPaint.setColor(color);
-        canvas.save(Canvas.CLIP_SAVE_FLAG);
-        canvas.clipRect(startX, 0, endX, getMeasuredHeight());
-        canvas.drawText(mText, mTextStartX, getMeasuredHeight() / 2
-                + mTextBound.height() / 2, mPaint);
-        canvas.restore();
-    }
-
-    private void drawChangeRight(Canvas canvas, int r) {
-        drawText(canvas, mTextChangeColor, (int) (mTextStartX + (1 - mProgress) * mTextWidth), mTextStartX + mTextWidth);
-    }
-
-    private void drawOriginRight(Canvas canvas, int r) {
-        drawText(canvas, mTextOriginColor, mTextStartX, (int) (mTextStartX + (1 - mProgress) * mTextWidth));
-    }
-
-    private void drawChangeLeft(Canvas canvas, int r) {
-        drawText(canvas, mTextChangeColor, mTextStartX, (int) (mTextStartX + mProgress * mTextWidth));
-    }
-
-    private void drawOriginLeft(Canvas canvas, int r) {
-        drawText(canvas, mTextOriginColor, (int) (mTextStartX + mProgress * mTextWidth), mTextStartX + mTextWidth);
+        lyricManager.dispatchDraw(canvas, mPaint, mProgress);
     }
 
     public float getProgress() {
@@ -216,24 +200,6 @@ public class ColorTrackView extends View {
     private int sp2px(float dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 dpVal, getResources().getDisplayMetrics());
-    }
-
-
-    private static class TextDrawUnit {
-        public String text;
-        public int startX;
-        public int endX;
-        public int height;
-        public int startY;
-        public int color;
-
-        public void onDraw(Canvas canvas, Paint paint) {
-            paint.setColor(color);
-            canvas.save(Canvas.CLIP_SAVE_FLAG);
-            canvas.clipRect(startX, 0, endX, height);
-            canvas.drawText(text, startX, startY, paint);
-            canvas.restore();
-        }
     }
 
 }
