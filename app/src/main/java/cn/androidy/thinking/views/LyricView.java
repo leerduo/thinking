@@ -7,6 +7,11 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +21,7 @@ import cn.androidy.thinking.R;
 /**
  * Created by Rick Meng on 2015/6/18.
  */
-public class LyricView extends View {
+public class LyricView extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
     private Paint mPaint;
     private int mTextSize = sp2px(30);
     private int mTextOriginColor = 0xff000000;
@@ -24,29 +29,37 @@ public class LyricView extends View {
     private int mMaxTextWidth;
     private float mProgress;
     private LyricManager lyricManager;
+    private ValueAnimator animator;
+    private boolean isPlaying = false;
 
     public LyricView(Context context) {
         super(context, null);
+        init(context, null);
     }
 
     public LyricView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context, attrs);
+    }
+
+    private void init(Context context, AttributeSet attrs) {
+
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs,
+                    R.styleable.LyricView);
+            mTextSize = ta.getDimensionPixelSize(
+                    R.styleable.LyricView_text_size, mTextSize);
+            mTextOriginColor = ta.getColor(
+                    R.styleable.LyricView_text_origin_color,
+                    mTextOriginColor);
+            mTextChangeColor = ta.getColor(
+                    R.styleable.LyricView_text_change_color,
+                    mTextChangeColor);
+            mProgress = ta.getFloat(R.styleable.LyricView_progress, 0);
+            ta.recycle();
+        }
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-        TypedArray ta = context.obtainStyledAttributes(attrs,
-                R.styleable.LyricView);
-        mTextSize = ta.getDimensionPixelSize(
-                R.styleable.LyricView_text_size, mTextSize);
-        mTextOriginColor = ta.getColor(
-                R.styleable.LyricView_text_origin_color,
-                mTextOriginColor);
-        mTextChangeColor = ta.getColor(
-                R.styleable.LyricView_text_change_color,
-                mTextChangeColor);
-        mProgress = ta.getFloat(R.styleable.LyricView_progress, 0);
-        ta.recycle();
-
         mPaint.setTextSize(mTextSize);
 
         List<String> list = new ArrayList<String>();
@@ -59,6 +72,19 @@ public class LyricView extends View {
         list.add("这条路上的你我她");
         list.add(" 有谁迷路了吗");
         lyricManager = new LyricManager(list, getResources().getDisplayMetrics());
+    }
+
+    public void startOrPause() {
+        if (isPlaying) {
+            animator.cancel();
+            isPlaying = false;
+        } else {
+            animator = ValueAnimator.ofFloat(mProgress, 1).setDuration((long) (30 * 1000 * (1 - mProgress)));
+            animator.setInterpolator(new LinearInterpolator());
+            animator.addUpdateListener(this);
+            animator.addListener(this);
+            animator.start();
+        }
     }
 
     @Override
@@ -80,13 +106,29 @@ public class LyricView extends View {
                 dpVal, getResources().getDisplayMetrics());
     }
 
-    public float getProgress() {
-        return mProgress;
-    }
-
-    public void setProgress(float progress) {
-        this.mProgress = progress;
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        LyricView.this.mProgress = (float) animation.getAnimatedValue();
         invalidate();
     }
 
+    @Override
+    public void onAnimationStart(Animator animation) {
+        isPlaying = true;
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        isPlaying = false;
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) {
+        isPlaying = false;
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) {
+        isPlaying = true;
+    }
 }

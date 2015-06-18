@@ -29,7 +29,7 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
     private FloatingActionButton mFloatingActionButton;
     private ArrayList<Integer> mFloatingActionButtonImageResIdList;
     private int mCurrentColorIndex = 0;
-    private LyricView mColorTrackView;
+    private LyricView mLyricView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
         mFloatingActionButtonImageResIdList.add(R.drawable.ic_favorite_white_48dp);
         mFloatingActionButton.setImageResource(mFloatingActionButtonImageResIdList.get(mCurrentColorIndex));
         mCurrentColorIndex = (mCurrentColorIndex + 1) % mFloatingActionButtonImageResIdList.size();
-        mColorTrackView = (LyricView) findViewById(R.id.colorTrackView);
+        mLyricView = (LyricView) findViewById(R.id.lyricView);
     }
 
     @Override
@@ -64,9 +64,7 @@ public class LyricViewActivity extends SampleActivityBase implements View.OnClic
     }
 
     public void startPlay(View view) {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mColorTrackView, "progress", 0, 1).setDuration(30 * 1000);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.start();
+        mLyricView.startOrPause();
     }
 
     @Override
